@@ -1,179 +1,144 @@
-# SaaS Foundations
+# 🛒 E‑Commerce API Backend (Built on SaaS Foundations)
 
-Build the foundations for a Software as a Service business by leveraging Django, Tailwind, htmx, Neon Postgres, Redis, and more.
+This is a full-stack, **API-first e-commerce backend** built using Django, Django REST Framework, Tailwind CSS, and more.
 
-The goal of this project is to learn how to create a reusable foundation for building SaaS products. When release, this course will span multiple topics and give you a solid foundation into build your business.
+> ⚠️ **Note:** This project is under active development. The goal is to build a clean, scalable API-powered e-commerce backend from scratch, inspired by the [SaaS Foundations](https://github.com/codingforentrepreneurs/SaaS-Foundations) structure.
 
+---
 
-## References
+## 🧱 Based On
 
-- Deploy Django on [Railway](https://kirr.co/qysgeu) with [this Dockerfile and guide](https://www.codingforentrepreneurs.com/blog/deploy-django-on-railway-with-this-dockerfile/)
-- Create a One-Off Secret Key for Django [blog post](https://www.codingforentrepreneurs.com/blog/create-a-one-off-django-secret-key/)
+This project is based on the open-source **[SaaS Foundations](https://github.com/codingforentrepreneurs/SaaS-Foundations)** repo by Coding for Entrepreneurs. Their architecture served as the starting point.  
+Big thanks to their work! This project extends that foundation into a full **multi-domain e-commerce system** with:
 
+- Clean modular app structure (`accounts`, `catalog`, `cart`, `orders`, `payments`, etc.)
+- REST API using Django REST Framework
+- JWT-based authentication
+- Paddle integration (planned)
+- Analytics, comments, activity tracking
+- Tailwind-based frontend (portfolio UI)
 
-Thank you to [Neon](https://kirr.co/eu0b31) for helping bring this course to life!
+---
 
+## ⚙️ Getting Started
 
-## Getting Started
+### 1. Clone & Setup Environment
 
-### Clone
 ```bash
-mkdir -p ~/dev/saas
-cd ~/dev/saas
-git clone https://github.com/codingforentrepreneurs/SaaS-Foundations .
+git clone https://github.com/yourusername/ecom-api-backend.git
+cd ecom-api-backend
 ```
-
 ### Create Virtual Environment
 
 *macOS/Linux*
 ```bash
-python3 --version # should be 3.11 or higher
 python3 -m venv venv
 source venv/bin/activate
 ```
 
 *Windows*
 ```bash
-c:\Python312\python.exe -m venv venv
+python -m virtualenv venv # if it doesn't work then pip install virtualenv
 .\venv\Scripts\activate
 ```
-
-### Install Requirements
+### 3. Install Requirements
 ```bash
-# with venv activated
-pip install pip --upgrade && pip install -r requirements.txt
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
+### 🔐 Setup Environment Variables
+## Create a .env file at the project root:
+```ini
+DJANGO_SECRET_KEY=your-secret-key-here
+DATABASE_URL=postgresql://user:pass@localhost:5432/ecom_db
 
-### Sample dotenv to dotnev
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_HOST_USER=your@email.com
+EMAIL_HOST_PASSWORD=your-email-password
 
-```bash
-cp .env.sample .env
-cat .env
+STRIPE_SECRET_KEY=optional
+PADDLE_VENDOR_ID=optional
+PADDLE_API_KEY=optional
 ```
-Values include:
-- `DJANGO_DEBUG=1`
-- `DJANGO_SECRET_KEY=""`
-- `DATABASE_URL=""`
-- `EMAIL_HOST="smtp.gmail.com"`
-- `EMAIL_PORT="587"`
-- `EMAIL_USE_TLS=True`
-- `EMAIL_USE_SSL=False`
-- `EMAIL_HOST_USER=""`
-- `EMAIL_HOST_PASSWORD=""`
-- `ADMIN_USER_EMAIL=""`
-- `STRIPE_SECRET_KEY=""`
-
-
-### Create the _DJANGO_SECRET_KEY_
-
-```bash
+## Generate a Django secret key:
+``` bash
 python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
 ```
-or
+### 🚀 First Run
 ```bash
-openssl rand -base64 64
-```
-or
-```bash
-python -c 'import secrets; print(secrets.token_urlsafe(64))'
-```
+# Activate virtual env if not already
+source venv/bin/activate     # or .\venv\Scripts\activate (Windows)
 
-Once you have this value, add update `DJANGO_SECRET_KEY` in `.env`.
+cd src/
 
-
-### Create [Neon](https://kirr.co/eu0b31) Postgres Database
-
-
-#### Install Neon CLI
-Using the [Neon cli](https://neon.tech/docs/reference/cli-install) via [homebrew](https://brew.sh/):
-
-```bash
-brew install neonctl
-```
-
-#### Login to Neon CLI
-
-```bash
-neonctl auth
-```
-This will open a browser window to login.
-
-####  Create a new Neon project (optional)
-```bash
-neonctl projects create --name saas
-```
-
-#### Get the Project ID
-
-Once created, get the project id: 
-
-```bash
-neonctl projects list
-```
-Projects
-
-```bash
-┌──────────────────────────┬────────────────────────────┬───────────────┬──────────────────────┐
-│ Id                       │ Name                       │ Region Id     │ Created At           │
-├──────────────────────────┼────────────────────────────┼───────────────┼──────────────────────┤
-│ steep-base-11409687      │ saas                       │ aws-us-east-2 │ 2024-06-02T04:03:07Z │
-└──────────────────────────┴────────────────────────────┴───────────────┴──────────────────────┘
-```
-
-```bash
-PROJECT_ID=steep-base-11409687
-```
-Replace `steep-base-11409687` with your project id.
-
-Or using the shortcut:
-
-```bash
-PROJECT_ID=$(neonctl projects list | grep "saas" | awk -F '│' '{print $2}' | xargs)
-```
-
-#### Get the Database Connection String
-
-```bash
-neonctl connection-string --project-id "$PROJECT_ID"
-```
-Set this value to `DATABASE_URL` in `.env`. 
-
-
-### Run Migrations
-
-```bash
-source venv/bin/activate 
-# or .\venv\Scripts\activate if windows
-cd src
+# Run migrations
 python manage.py migrate
-```
 
-### Create a Superuser
-
-```bash
+# Create superuser
 python manage.py createsuperuser
-```
 
-### Pull Vendor Static Files
-
-```bash
+# Pull Tailwind vendor files
 python manage.py vendor_pull
-```
 
-
-### Create a Stripe Account
-
-1. Sign up on [Stripe.com](https://www.stripe.com) for an account
-2. Get or create a Stripe Secret API Key (Dashboard > Developers > API keys > _Secret key_ )
-3. Update _dotenv_ (`.env`) with the value `STRIPE_SECRET_KEY` with your key.
-
-
-### Run the Server
-
-```bash
+# Start dev server
 python manage.py runserver
 ```
+## 📦 Project Modules
 
-Ready to roll! 🚀
+- `accounts/` – Custom user model, profile, address book  
+- `catalog/` – Products, categories, media, inventory  
+- `cart/` – User cart, cart items (anonymous and logged-in)  
+- `orders/` – Checkout flow, order status tracking  
+- `payments/` – Paddle integration (coming soon)  
+- `comments/` – Product reviews and moderation  
+- `analytics/` – Stats, tracking, user activity  
+- `frontend/` – Minimal portfolio-styled Tailwind frontend  
+- `docs/` – API schema (OpenAPI), usage examples (planned)  
 
-Much more coming soon!
+---
+
+## 📡 API Endpoints (v1)
+
+> All routes are versioned and mounted under `/api/v1/`
+
+- `POST   /auth/register` – Register a new user  
+- `POST   /auth/login` – Obtain JWT token  
+- `GET    /catalog/products/` – List products  
+- `GET    /catalog/categories/` – List categories  
+- `GET    /cart/` – View current cart  
+- `POST   /cart/items/` – Add item to cart  
+- `GET    /orders/` – View user orders  
+- `GET    /users/me/` – User profile  
+- `GET    /users/me/stats/` – Analytics stats  
+- `POST   /reviews/` – Submit a product review  
+- `POST   /checkout/` – Start checkout (Paddle - coming soon)  
+
+---
+
+## 📜 License & Attribution
+
+This project is built on top of the amazing work by **[SaaS Foundations](https://github.com/codingforentrepreneurs/SaaS-Foundations)**.  
+Their project is licensed under the [MIT License](https://github.com/codingforentrepreneurs/SaaS-Foundations/blob/main/LICENSE), and this project continues to respect and extend that license.
+
+> MIT License applies unless otherwise specified.
+
+---
+
+## 🛠️ Roadmap
+
+- [x] Custom user model + auth  
+- [x] Catalog system  
+- [x] Cart & Orders  
+- [ ] Paddle checkout integration  
+- [ ] Reviews system  
+- [ ] Basic analytics  
+- [ ] GraphQL support  
+- [ ] Multi-tenant SaaS mode  
+
+---
+
+## 📬 Contact
+
+Made with ❤️ by **Rayyan Aqil**  
+_Portfolio coming soon..._
