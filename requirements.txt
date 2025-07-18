@@ -28,3 +28,8 @@ django-debug-toolbar
 
 # Image processing
 Pillow
+
+#Test
+pytest
+pytest-django
+
