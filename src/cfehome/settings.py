@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "dashboard",
     # my apps
     "catalog",
+    "cart",
     # third-party-apps
     "allauth_ui",
     'allauth',
