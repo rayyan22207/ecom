@@ -67,12 +67,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # my-apps
+    # cfe-apps
     "commando",
     "customers",
     "accounts",
     "checkouts",
     "dashboard",
+    # my apps
+    "catalog",
     # third-party-apps
     "allauth_ui",
     'allauth',
@@ -139,24 +141,6 @@ if DATABASE_URL is not None:
     }
 
 
-# Add these at the top of your settings.py
-# from os import getenv
-# from dotenv import load_dotenv
-
-# Replace the DATABASES section of your settings.py with this
-# DATABASES = {
-#   'default': {
-#     'ENGINE': 'django.db.backends.postgresql',
-#     'NAME': config('PGDATABASE'),
-#     'USER': config('PGUSER'),
-#     'PASSWORD': config('PGPASSWORD'),
-#     'HOST': config('PGHOST'),
-#     'PORT': config('PGPORT', 5432),
-#     'OPTIONS': {
-#       'sslmode': 'require',
-#     },
-#   }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
