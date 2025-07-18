@@ -213,14 +213,34 @@ STATICFILES_DIRS = [
 # local cdn
 STATIC_ROOT = BASE_DIR / "local-cdn"
 
-# < Django 4.2
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# ------------------------
+# STATIC FILES (CSS, JS)
+# ------------------------
+STATIC_URL = "/static/"
 
 STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",  # For media files
+    },
 }
+
+# ------------------------
+# MEDIA FILES (AWS S3)
+# ------------------------
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default="us-east-1")
+AWS_QUERYSTRING_AUTH = False  # Public URLs (no ?signature)
+
+MEDIA_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/"
+
+# Optional (better file names)
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None  # Or "public-read" if you're not using signed URLs
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
