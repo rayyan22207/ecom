@@ -70,9 +70,9 @@ INSTALLED_APPS = [
     # my-apps
     "commando",
     "customers",
-    "auth",
+    "accounts",
     "checkouts",
-    "dashboard"
+    "dashboard",
     # third-party-apps
     "allauth_ui",
     'allauth',
@@ -178,10 +178,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Django Allauth Config 
 LOGIN_REDIRECT_URL = "/"
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_VERIFICATION="mandatory"
 ACCOUNT_EMAIL_SUBJECT_PREFIX="[CFE] "
-ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 
 AUTHENTICATION_BACKENDS = [
     # ...
@@ -242,3 +242,5 @@ STORAGES = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'accounts.User'
