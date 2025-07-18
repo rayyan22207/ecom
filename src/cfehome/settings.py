@@ -70,9 +70,9 @@ INSTALLED_APPS = [
     # my-apps
     "commando",
     "customers",
-    "profiles",
-    "subscriptions",
-    "visits",
+    "auth",
+    "checkouts",
+    "dashboard"
     # third-party-apps
     "allauth_ui",
     'allauth',
