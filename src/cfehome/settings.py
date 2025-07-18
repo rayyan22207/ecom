@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     "cart",
     "orders",
     "comments",
+    "analytics",
     # third-party-apps
     "allauth_ui",
     'allauth',
