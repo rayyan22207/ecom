@@ -69,7 +69,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # cfe-apps
     "commando",
-    "customers",
     "accounts",
     "checkouts",
     "dashboard",
