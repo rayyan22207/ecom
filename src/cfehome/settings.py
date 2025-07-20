@@ -88,6 +88,9 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
+    # for docs
+    'drf_spectacular',
+    'drf_spectacular_sidecar',  # required for serving Swagger UI / Redoc
     
 ]
 
@@ -147,7 +150,9 @@ if DATABASE_URL is not None:
         )
     }
 
+
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
