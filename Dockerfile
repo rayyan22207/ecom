@@ -43,11 +43,22 @@ COPY ./src /code
 # Install the Python project requirements
 RUN pip install -r /tmp/requirements.txt
 
+# --- Handle Environment Variables ---
+# Accept secrets from --build-arg
 ARG DJANGO_SECRET_KEY
-ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
-
 ARG DJANGO_DEBUG=0
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+ARG AWS_STORAGE_BUCKET_NAME
+ARG AWS_S3_REGION_NAME
+
+# Expose them as ENV (for runtime and decouple support)
+ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
 ENV DJANGO_DEBUG=${DJANGO_DEBUG}
+ENV AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+ENV AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+ENV AWS_STORAGE_BUCKET_NAME=${AWS_STORAGE_BUCKET_NAME}
+ENV AWS_S3_REGION_NAME=${AWS_S3_REGION_NAME}
 
 # database isn't available during build
 # run any other commands that do not need the database
