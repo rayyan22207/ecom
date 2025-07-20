@@ -1,7 +1,6 @@
 from django.urls import path
-from . import views
-
+from .views import ProductViewCreateAPIView
 
 urlpatterns = [
-    path('', views.test)
+    path('track/', ProductViewCreateAPIView.as_view(), name='track-product-view'),
 ]
