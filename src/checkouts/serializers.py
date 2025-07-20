@@ -17,3 +17,8 @@ class PaymentSerializer(serializers.ModelSerializer):
             'paid_at',
         ]
         read_only_fields = ['status', 'paid_at']
+
+class PaymentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = ['order', 'method', 'amount']
