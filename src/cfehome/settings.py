@@ -59,7 +59,7 @@ ALLOWED_HOSTS = [
     'ecom-production-dc3c.up.railway.app'
 ]
 CSRF_TRUSTED_ORIGINS = [
-    "https://ecom-production-dc3c.up.railway.app/",
+    "https://ecom-production-dc3c.up.railway.app",
 ]
 CSRF_COOKIE_SECURE = True
 
