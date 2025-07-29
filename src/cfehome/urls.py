@@ -20,7 +20,7 @@ urlpatterns = [
     path("cart/", include('cart.urls')),
     path("api/orders/", include('orders.urls')),
     path("api/comments/", include('comments.urls')),
-    path("api/analytics/", include('analytics.urls')),
+    path("analytics/", include('analytics.urls')),
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     
     # 🧠 API schema (JSON)
