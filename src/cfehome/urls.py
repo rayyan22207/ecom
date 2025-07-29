@@ -18,10 +18,10 @@ urlpatterns = [
     path("dashboard/", include('dashboard.urls')),
     path("catalog/", include("catalog.urls")),
     path("cart/", include('cart.urls')),
-    path("api/orders/", include('orders.urls')),
-    path("api/comments/", include('comments.urls')),
+    path("orders/", include('orders.urls')),
+    path("comments/", include('comments.urls')),
     path("analytics/", include('analytics.urls')),
-    path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
+    path("token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     
     # 🧠 API schema (JSON)
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
